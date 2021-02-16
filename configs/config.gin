@@ -1,0 +1,62 @@
+# Input pipeline
+load.name = 'idrid'
+load.data_dir = '/home/data'
+load.validation_rate = 0.25
+load.tfrecord_exist = False
+load.graham = False
+load.sample_pairing = False
+
+prepare.buffer_size = 256
+prepare.batch_size = 16
+prepare.caching = False
+
+preprocess.img_height = 256
+preprocess.img_width = 256
+
+augment.random_rotate_rate = 0.5
+augment.shear_level = (0.05, 0.05)
+augment.random_contrast_boundary = (0.8, 1)  # must less than 1
+augment.random_saturation_boundary = (0.8, 1)  # must less than 1
+augment.max_delta_hue = 0.01
+
+over_sampling.distribution = (2, 12, 2, 4, 4) # idrid without sample pairing
+# over_sampling.distribution = (1, 15, 1, 1, 10) # idrid with sample pairing
+# over_sampling.distribution = (1, 10, 5, 30, 35) # eyepacs without sample pairing
+over_sampling.over_sample_rate = 1
+
+# Architectures
+vgg_like.base_filters = 16
+vgg_like.blocks_array = (0, 2, 3)
+
+simplified_inception.blockset_1_filter_array = (32, 32, 48, 48)
+simplified_inception.blockset_2_filter_array = (64, 64, 64, 80, 80)
+simplified_inception.blockset_3_filter_array = (96, 96, 112)
+
+simplified_seresnext.blockset_1_filter_array = (64, 128)
+simplified_seresnext.blockset_1_number = 3
+simplified_seresnext.blockset_2_filter_array = (128, 256)
+simplified_seresnext.blockset_2_number = 6
+simplified_seresnext.blockset_3_filter_array = (256, 512)
+simplified_seresnext.blockset_3_number = 3
+
+rep_vgg.rep_vgg_type = 'B0'
+
+densenet201.trainable_rate = 0.0
+efficientnetb3.trainable_rate = 0.0
+
+# Layers
+vgg_block.kernel_size = (3, 3)
+
+output_block.dense_units = 32
+output_block.dropout_rate = 0.2
+
+# Training
+Trainer.total_steps = 10000
+Trainer.visual_interval = 1000
+Trainer.log_interval = 100
+Trainer.ckpt_interval = 100
+Trainer.learning_rate = 1e-4
+
+# Deep visualization
+integrated_gradients.m_steps = 50
+integrated_gradients.batch_size = 8

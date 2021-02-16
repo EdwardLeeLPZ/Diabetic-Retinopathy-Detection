@@ -1,0 +1,45 @@
+# Input pipeline
+load.name = 'idrid'
+load.data_dir = '/home/data'
+load.validation_rate = 0.25
+load.tfrecord_exist = False
+load.graham = False
+load.sample_pairing = False
+
+prepare.buffer_size = 256
+prepare.batch_size = 16
+prepare.caching = False
+
+preprocess.img_height = 256
+preprocess.img_width = 256
+
+augment.random_rotate_rate = 0.5
+augment.shear_level = (0.05, 0.05)
+augment.random_contrast_boundary = (0.8, 1)  # must less than 1
+augment.random_saturation_boundary = (0.8, 1)  # must less than 1
+augment.max_delta_hue = 0.01
+
+over_sampling.distribution = (2, 12, 2, 4, 4) # idrid without sample pairing
+# over_sampling.distribution = (1, 15, 1, 1, 10) # idrid with sample pairing
+# over_sampling.distribution = (1, 10, 5, 30, 35) # eyepacs without sample pairing
+over_sampling.over_sample_rate = 1
+
+# Architectures
+
+# Transfer learning
+efficientnetb3.trainable_rate = 0.0
+
+# Layers
+output_block.dense_units = 32
+output_block.dropout_rate = 0.2
+
+# Training
+Trainer.total_steps = 10000
+Trainer.visual_interval = 1000
+Trainer.log_interval = 100
+Trainer.ckpt_interval = 100
+Trainer.learning_rate = 1e-4
+
+# Deep visualization
+integrated_gradients.m_steps = 50
+integrated_gradients.batch_size = 8
